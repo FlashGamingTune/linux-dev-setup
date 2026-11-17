@@ -1,20 +1,25 @@
-# ---------- eza ----------
-alias ls='eza --icons'
-alias ll='eza -lah --icons'
-alias la='eza -a --icons'
-alias lt='eza --tree --icons --level=2'
+# ---------- Optional tool aliases ----------
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --icons'
+  alias ll='eza -lah --icons'
+  alias la='eza -a --icons'
+  alias lt='eza --tree --icons --level=2'
+fi
 
-# ---------- bat ----------
-alias bat='batcat'
-alias cat='batcat'
+if command -v batcat >/dev/null 2>&1; then
+  alias bat='batcat'
+  alias cat='batcat'
+elif command -v bat >/dev/null 2>&1; then
+  alias cat='bat'
+fi
 
-# ---------- fd ----------
-alias fd='fdfind'
+if command -v fdfind >/dev/null 2>&1; then
+  alias fd='fdfind'
+fi
 
 # ---------- shortcuts ----------
 alias c='clear'
 alias cls='clear'
-alias update='sudo apt update && sudo apt upgrade'
 alias sysinfo='fastfetch'
 
 # ---------- Git ----------

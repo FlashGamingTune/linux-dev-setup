@@ -1,27 +1,15 @@
-cat > .gitignore << 'EOF'
-# Temporary files
+# Temporary and editor files
 *.tmp
 *.temp
 *.log
-
-# Vim
 *.swp
 *.swo
 *~
-
-# macOS
 .DS_Store
-
-# Windows
 Thumbs.db
 
-# Python
+# Generated files
 __pycache__/
-
-# Node
 node_modules/
-
-# Build artifacts
 dist/
 build/
-EOF

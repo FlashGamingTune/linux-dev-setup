@@ -1,0 +1,15 @@
+# Optional terminal tools. The installer continues if one is unavailable.
+curl
+wget
+neovim
+fzf
+ripgrep
+fd
+eza
+bat
+zoxide
+btop
+tree
+xclip
+fontconfig
+fastfetch

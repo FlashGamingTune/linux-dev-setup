@@ -83,7 +83,7 @@ plugins=(
 	zsh-syntax-highlighting
 	)
 
-source $ZSH/oh-my-zsh.sh
+[[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
 
 # User configuration
 
@@ -93,11 +93,13 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='nvim'
- fi
+if [[ -n $SSH_CONNECTION ]] && command -v vim >/dev/null 2>&1; then
+  export EDITOR='vim'
+elif command -v nvim >/dev/null 2>&1; then
+  export EDITOR='nvim'
+else
+  export EDITOR='vi'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -115,15 +117,26 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f "$HOME/.p10k.zsh" ]] || source "$HOME/.p10k.zsh"
 
 [[ -d /opt/nvim/bin ]] && export PATH="/opt/nvim/bin:$PATH"
-alias fd=fdfind
-[[ -r /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
-[[ -r /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 
 export PATH=$PATH:$HOME/.spicetify
 
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+ZSH_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+for config_file in aliases.zsh environment.zsh exports.zsh functions.zsh extra.zsh; do
+  [[ ! -r "$ZSH_CONFIG_DIR/$config_file" ]] || source "$ZSH_CONFIG_DIR/$config_file"
+done
+
+if command -v fzf >/dev/null 2>&1; then
+  for fzf_file in "$HOME/.fzf/shell/key-bindings.zsh" /usr/share/fzf/key-bindings.zsh /usr/share/doc/fzf/examples/key-bindings.zsh; do
+    if [[ -r "$fzf_file" ]]; then
+      source "$fzf_file"
+      break
+    fi
+  done
+fi

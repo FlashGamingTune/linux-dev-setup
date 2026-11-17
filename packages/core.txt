@@ -1,0 +1,4 @@
+# Needed for the shell setup and tmux configuration.
+zsh
+git
+tmux
